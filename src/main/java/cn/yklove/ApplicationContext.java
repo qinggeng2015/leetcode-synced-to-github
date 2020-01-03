@@ -4,8 +4,6 @@ import cn.yklove.remote.*;
 import org.apache.commons.lang.StringUtils;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
-import org.eclipse.jgit.api.errors.NoFilepatternException;
-import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,6 +78,13 @@ public class ApplicationContext {
                         file = new File(config.getGitPath() + "/" + config.getLeetCodeSource() + "/" + fileName + "/" + stat_status_pair.getStat().getQuestion__title() + ".txt");
                         file.createNewFile();
                         FileOutputStream fos = new FileOutputStream(file);
+                        fos.write(("/**\n").getBytes());
+                        fos.write((" * status: " + submission.getStatusDisplay()+"\n").getBytes());
+                        fos.write((" *\n").getBytes());
+                        fos.write((" * time: " + submission.getRuntime()+"\n").getBytes());
+                        fos.write((" *\n").getBytes());
+                        fos.write((" * memory: " + submission.getMemory()+"\n").getBytes());
+                        fos.write((" */\n\n").getBytes());
                         fos.write(submissionDetail.getSubmissionCode().getBytes());
                         break;
                     }
